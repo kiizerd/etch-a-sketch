@@ -10,22 +10,34 @@ let squares = [];
 let brushColor = 'grey';
 
 widthSquares = (columns) => {
-    squareWidth = 550 / columns;
+    squareWidth = 650 / columns;
     return squareWidth + 'px';
-}
+};
 
 heightSquares = (rows) => {
-    squareHeight = 750 / rows;
+    squareHeight = 850 / rows;
     return squareHeight + 'px';
-}
+};
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+};
 
 brushEvent = () => {
     squares.forEach(square => {
         square.addEventListener('mouseenter', () => {
-            square.style.backgroundColor = brushColor;
-        })
-    })
-}
+            if (brushColor === 'rainbow') {
+                square.style.backgroundColor = getRandomColor();
+            } else {
+                square.style.backgroundColor = brushColor;}
+        });
+    });
+}    
 
 createGrid = (rows, columns) => {
     gameContainer.style.gridAutoRows = widthSquares(columns);
@@ -45,11 +57,11 @@ createGrid = (rows, columns) => {
         if (column == columns) {
             row += 1;
             column = 1;
-        }
+        };
         console.log('square created');
         brushEvent();
-    }
-}
+    };
+};
 
 createGrid(16, 16);
 
@@ -57,18 +69,17 @@ resizeBtn.addEventListener('click', () => {
     var elements = document.getElementsByClassName('square');
     while(elements.length > 0){
         elements[0].parentNode.removeChild(elements[0]);
-    }
+    };
     squares = [];
     createGrid(prompt('Number of rows?', 16), prompt('Number of columns?', 16));
-}
-);
+});
 
 blackBtn.addEventListener('click', () => {
     brushColor = 'black';
 });
 
 rainbowBtn.addEventListener('click', () => {
-
+    brushColor = 'rainbow';
 });
 
 eraserBtn.addEventListener('click', () => {
