@@ -11,12 +11,12 @@ let brushColor = 'grey';
 
 widthSquares = (columns) => {
     squareWidth = 650 / columns;
-    return squareWidth + 'px';
+    return (squareWidth + 1) + 'px';
 };
 
 heightSquares = (rows) => {
     squareHeight = 850 / rows;
-    return squareHeight + 'px';
+    return (squareHeight + 1) + 'px';
 };
 
 function getRandomColor() {

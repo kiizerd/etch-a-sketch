@@ -1,5 +1,5 @@
 html {
-    background-color: #c76904;
+    background-color: #B9DCD2;
 }
 
 h1 {
@@ -8,17 +8,23 @@ h1 {
     text-align: center;
 }
 
+#game-background {
+    margin: 15px 175px 0;
+    padding: 15px;
+    background-color: #dcb9be;
+    border: 2px solid #030303;
+    border-radius: 15px;
+}
+
 #game-container {
     display: grid;
     justify-content: center;
     align-content: center;
+    padding: 5px;
+    border: 1px solid black;
 }
 
-#game-background {
-    padding: 15px;
-    background-color: lightblue;
-}
-#btn-container{
+#btn-container {
     display: flex;
     justify-content: center;
 }
