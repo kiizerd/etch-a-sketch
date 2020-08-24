@@ -3,19 +3,45 @@ const resetBtn = document.getElementById('reset-btn');
 const resizeBtn = document.getElementById('resize-btn');
 const blackBtn = document.getElementById('black-btn');
 const rainbowBtn = document.getElementById('rainbow-btn');
+const shadeBtn = document.getElementById('shade-btn');
 const eraserBtn = document.getElementById('eraser-btn');
-
+let smallWindow = window.matchMedia('(max-width: 500px)');
+let mediumWindow = window.matchMedia('(max-width: 1000px)');
+let largeWindow = window.matchMedia('(max-width: 2000px)');
 
 let squares = [];
 let brushColor = 'grey';
+let gameHeight = 650;
+let gameWidth = 550;
+
+/*sizeWindow = () => {
+    if (smallWindow.matches) {
+        gameHeight = 500;
+        gameWidth = 350;
+        gameContainer.style.gridAutoRows = widthSquares(columns);
+        gameContainer.style.gridAutoColumns = heightSquares(rows);
+    } else if (mediumWindow.matches) {
+        gameHeight = 650;
+        gameWidth = 550;
+    } else if (largeWindow.matches) {
+        gameHeight = 700;
+        gameWidth = 750;
+    }
+}
+
+window.addEventListener('onresize', () => {
+    sizeWindow();
+}) */
+
+
 
 widthSquares = (columns) => {
-    squareWidth = 650 / columns;
+    squareWidth = gameHeight / columns;
     return (squareWidth + 1) + 'px';
 };
 
 heightSquares = (rows) => {
-    squareHeight = 850 / rows;
+    squareHeight = gameWidth / rows;
     return (squareHeight + 1) + 'px';
 };
 
@@ -40,8 +66,8 @@ brushEvent = () => {
 }    
 
 createGrid = (rows, columns) => {
-    gameContainer.style.gridAutoRows = widthSquares(columns);
-    gameContainer.style.gridAutoColumns = heightSquares(rows);
+    gameContainer.style.gridAutoRows = widthSquares(rows);
+    gameContainer.style.gridAutoColumns = heightSquares(columns);
     size = rows * columns; 
     let row = 1;
     let column = 1;
@@ -80,6 +106,10 @@ blackBtn.addEventListener('click', () => {
 
 rainbowBtn.addEventListener('click', () => {
     brushColor = 'rainbow';
+});
+
+shadeBtn.addEventListener('click', () => {
+    
 });
 
 eraserBtn.addEventListener('click', () => {
