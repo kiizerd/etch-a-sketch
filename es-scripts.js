@@ -64,17 +64,15 @@ const pSBC=(p,c0,c1,l)=>{
 brushEvent = (color) => {
     squares.forEach(square => {
         square.className = 'square';
-        switch (color) {
+        switch (color) {    
+            case 'darken':
+                square.addEventListener('mouseenter', () => {
+                    square.style.backgroundColor = pSBC(-0.1, square.style.backgroundColor);
+                });
+                break;
             case 'rainbow': 
                 square.addEventListener('mouseenter', () => {
                     square.style.backgroundColor = getRandomColor();
-                });
-                break;    
-            case 'darken':
-                square.addEventListener('mouseenter', () => {
-                    let colorToShade = square.style.backgroundColor;
-                    let shadedColor = pSBC(-0.1, colorToShade);
-                    square.style.backgroundColor = shadedColor;
                 });
                 break;  
             case 'black':
