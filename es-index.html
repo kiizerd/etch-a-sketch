@@ -4,6 +4,7 @@
 <head>
     <title>Etch-a-Sketch</title>
     <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='es-styles.css'>
 </head>
 
@@ -14,7 +15,13 @@
             <button id='reset-btn'>Clear Grid</button>
             <button id='resize-btn'>Resize Grid</button>
         </div>
+        <div id='base-color-btn'>
+            <div>Select Base: </div>
+            <input class='color-select' id='base-color' type='color' value='#bab6b3'>
+        </div>
         <div id='brush-container'>
+            <div>Select Brush: </div>
+            <input class='color-select' id='color-picker' type='color'>
             <button id='black-btn'>Black</button>
             <button id='rainbow-btn'>Rainbow</button>
             <button id='darken-btn'>Darken</button>

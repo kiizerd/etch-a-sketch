@@ -5,6 +5,8 @@ const blackBtn = document.getElementById('black-btn');
 const rainbowBtn = document.getElementById('rainbow-btn');
 const darkenBtn = document.getElementById('darken-btn');
 const eraserBtn = document.getElementById('eraser-btn');
+const colorPicker = document.getElementById('color-picker');
+const baseColor = document.getElementById('base-color');
 let smallWindow = window.matchMedia('(max-width: 500px)');
 let mediumWindow = window.matchMedia('(max-width: 1000px)');
 let largeWindow = window.matchMedia('(max-width: 2000px)');
@@ -15,6 +17,7 @@ let brushColor = '#b6b4b1';
 let gameHeight = 650;
 let gameWidth = 550;
 let squareColor = '#bab6b3';
+let colorPicked;
 
 
 widthSquares = (columns) => {
@@ -61,10 +64,22 @@ const pSBC=(p,c0,c1,l)=>{
     else return"#"+(4294967296+r*16777216+g*65536+b*256+(f?m(a*255):0)).toString(16).slice(1,f?undefined:-2)
   };
 
+recolorSquares = () => {
+    squares.forEach(square => {
+        square.style.backgroundColor = baseColor.value;
+    });
+};
+
 brushEvent = (color) => {
     squares.forEach(square => {
         square.className = 'square';
-        switch (color) {    
+        switch (color) {
+            case 'colorPicker':
+                square.addEventListener('mouseenter', () => {
+                    colorPicked = colorPicker.value;
+                    square.style.backgroundColor = colorPicked;
+                });
+                break;    
             case 'darken':
                 square.addEventListener('mouseenter', () => {
                     square.style.backgroundColor = pSBC(-0.1, square.style.backgroundColor);
@@ -98,7 +113,7 @@ createGrid = (rows, columns) => {
         const newSquare = document.createElement('div');
         gameContainer.appendChild(newSquare);
         newSquare.className = 'square';
-        newSquare.style.backgroundColor = squareColor;
+        newSquare.style.backgroundColor = baseColor.value;
         newSquare.style.gridRow = row;
         newSquare.style.gridColumn = column;
         squares.push(newSquare);
@@ -120,6 +135,14 @@ resizeBtn.addEventListener('click', () => {
     };
     squares = [];
     createGrid(prompt('Number of rows?', 16), prompt('Number of columns?', 16));
+});
+
+baseColor.addEventListener('input', () => {
+    recolorSquares();
+});
+
+colorPicker.addEventListener('click', () => {
+    brushEvent('colorPicker')
 });
 
 blackBtn.addEventListener('click', () => {
