@@ -1,3 +1,4 @@
+const gameBackground = document.getElementById('game-background');
 const gameContainer = document.querySelector('#game-container');
 const resetBtn = document.getElementById('reset-btn');
 const resizeBtn = document.getElementById('resize-btn');
@@ -11,13 +12,14 @@ let smallWindow = window.matchMedia('(max-width: 500px)');
 let mediumWindow = window.matchMedia('(max-width: 1000px)');
 let largeWindow = window.matchMedia('(max-width: 2000px)');
 
-
 let squares = [];
+let randomColors = [];
 let brushColor = '#b6b4b1';
 let gameHeight = 650;
 let gameWidth = 550;
-let squareColor = '#bab6b3';
+let startColor = '#bab6b3';
 let colorPicked;
+let squareColor;
 
 
 widthSquares = (columns) => {
@@ -38,6 +40,10 @@ getRandomColor = () => {
     }
     return color;
 };
+
+function randNum(min, max) {
+    return Math.floor(Math.random() * (max - min) ) + min;
+}
 
 const pSBC=(p,c0,c1,l)=>{
     let r,g,b,P,f,t,h,i=parseInt,m=Math.round,a=typeof(c1)=="string";
@@ -76,32 +82,47 @@ brushEvent = (color) => {
         switch (color) {
             case 'colorPicker':
                 square.addEventListener('mouseenter', () => {
+                    gameBackground.classList.remove('shaking');
                     colorPicked = colorPicker.value;
-                    square.style.backgroundColor = colorPicked;
+                    brushColor = colorPicked;
+                    square.style.backgroundColor = brushColor;
                 });
                 break;    
             case 'darken':
                 square.addEventListener('mouseenter', () => {
-                    square.style.backgroundColor = pSBC(-0.1, square.style.backgroundColor);
+                    gameBackground.classList.remove('shaking');
+                    let color1 = square.style.backgroundColor;
+                    let color2 = pSBC(-0.1, color1);
+                    brushColor = color2;
+                    square.style.backgroundColor = brushColor;
                 });
                 break;
             case 'rainbow': 
                 square.addEventListener('mouseenter', () => {
+                    gameBackground.classList.remove('shaking')
                     square.style.backgroundColor = getRandomColor();
                 });
                 break;  
             case 'black':
                 square.addEventListener('mouseenter', () => {
+                    gameBackground.classList.remove('shaking')
                     square.style.backgroundColor = '#000000';
                 });
                 break;
             default:
                 square.addEventListener('mouseenter', () => {
+                    gameBackground.classList.remove('shaking')
                     square.style.backgroundColor = brushColor;
                 });
         };
     });    
-};    
+};
+
+fillColors = () => {
+    squares.forEach(i => {
+        randomColors.push(getRandomColor());
+    });
+};
 
 createGrid = (rows, columns) => {
     gameContainer.style.gridAutoRows = widthSquares(rows);
@@ -158,12 +179,13 @@ darkenBtn.addEventListener('click', () => {
 });
 
 eraserBtn.addEventListener('click', () => {
-    brushEvent(squareColor);
+    brushEvent(startColor);
 });
 
 resetBtn.addEventListener('click', () => {
     squares.forEach(square => {
-        square.style.backgroundColor = squareColor;
+        square.style.backgroundColor = baseColor.value;
     })
+    gameBackground.classList.add('shaking');    
 })
 
