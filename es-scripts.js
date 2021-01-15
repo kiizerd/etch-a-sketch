@@ -8,6 +8,7 @@ const darkenBtn = document.getElementById('darken-btn');
 const eraserBtn = document.getElementById('eraser-btn');
 const colorPicker = document.getElementById('color-picker');
 const baseColor = document.getElementById('base-color');
+
 let smallWindow = window.matchMedia('(max-width: 500px)');
 let mediumWindow = window.matchMedia('(max-width: 1000px)');
 let largeWindow = window.matchMedia('(max-width: 2000px)');
@@ -148,6 +149,22 @@ createGrid = (rows, columns) => {
   };
 };
 
+saveImage = (uri, filename) => {
+  var link = document.createElement('a');
+  if (typeof link.download === 'string') {
+    link.href = uri;
+    link.download = filename;
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+  } else {
+    window.open(uri);
+  }
+}
+
 window.onload = () => {
   createGrid(16, 16);
   
@@ -155,14 +172,11 @@ window.onload = () => {
 
   $("#save-btn").on('click', () => {
     html2canvas(gameContainer, {
-      onrendered: function (canvas) {
-        getCanvas = canvas
+      onrendered: function(canvas) {
+        saveImage(canvas.toDataURL(), 'new_sketch.png')
       }
-    });
-    let imageData = getCanvas.toDataURL("image/png");
-    let newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-    $("#save-btn").attr("download", "your_pic_name.png").attr("href", newData);
-  });
+    })
+  })
 }
 
 resetBtn.addEventListener('click', () => {
